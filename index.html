@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="nl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kon Makandra Oso | Winti Kennis Centrum Suriname</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Cormorant Garamond (Serif) & Inter (Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0B132B',      // Deep Navy Background
+                        timber: '#8B5A2B',    // Natural Timber Hues
+                        gold: '#D4AF37',      // Gold Accent
+                        green: '#2E5A3B',     // Subtle Greenery
+                        offwhite: '#F8F9FA',  // Off-white for light sections
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Inter"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #0B132B;
+            color: #F8F9FA;
+            overflow-x: hidden;
+        }
+        
+        /* Smooth scroll reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Timeline Custom CSS */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, #D4AF37, #8B5A2B, transparent);
+        }
+        @media (max-width: 768px) {
+            .timeline-line {
+                left: 20px;
+            }
+        }
+
+        /* Interactive Tab Active State */
+        .zone-tab.active {
+            background-color: #D4AF37;
+            color: #0B132B;
+            font-weight: 600;
+            border-color: #D4AF37;
+        }
+        .zone-tab.active span {
+            color: #0B132B !important;
+        }
+
+        /* Image Hover Effects */
+        .gallery-img {
+            transition: transform 0.6s ease, box-shadow 0.6s ease;
+        }
+        .gallery-img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.15);
+        }
+
+        /* Form Input Focus States */
+        input:focus, select:focus {
+            outline: none;
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 1px #D4AF37;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B132B;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8B5A2B;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- ================= NAVIGATION ================= -->
+    <nav class="fixed w-full z-50 bg-navy/90 backdrop-blur-md border-b border-white/10 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="text-gold text-2xl mr-2"><i class="fa-solid fa-ankh"></i></span>
+                    <span class="font-serif text-xl tracking-widest text-white">KON MAKANDRA OSO</span>
+                </div>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#mission" class="text-sm tracking-wide text-gray-300 hover:text-gold transition">Missie</a>
+                    <a href="#architecture" class="text-sm tracking-wide text-gray-300 hover:text-gold transition">Architectuur</a>
+                    <a href="#partners" class="text-sm tracking-wide text-gray-300 hover:text-gold transition">Partners</a>
+                    <a href="#roadmap" class="text-sm tracking-wide text-gray-300 hover:text-gold transition">Ontwikkelplan</a>
+                    <a href="#stakeholder" class="px-5 py-2 border border-gold text-gold text-sm tracking-wide hover:bg-gold hover:text-navy transition duration-300">Word ambassadeur</a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-navy border-b border-white/10">
+            <div class="px-4 pt-2 pb-6 space-y-4">
+                <a href="#mission" class="block text-gray-300 hover:text-gold">Missie</a>
+                <a href="#architecture" class="block text-gray-300 hover:text-gold">Architectuur</a>
+                <a href="#partners" class="block text-gray-300 hover:text-gold">Partners</a>
+                <a href="#roadmap" class="block text-gray-300 hover:text-gold">Ontwikkelplan</a>
+                <a href="#stakeholder" class="block text-gold border border-gold px-4 py-2 text-center">Word ambassadeur</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ================= HERO SECTION ================= -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20">
+        <!-- Background Image: Replace with your Hero Render -->
+        <div class="absolute inset-0 z-0">
+            <img src="images/hero-exterior.jpg" alt="Kon Makandra Oso Vooraanzicht" class="w-full h-full object-cover opacity-40">
+            <div class="absolute inset-0 bg-gradient-to-b from-navy/80 via-navy/60 to-navy"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <div class="mb-6 flex justify-center reveal">
+                <span class="text-gold text-5xl"><i class="fa-solid fa-ankh"></i></span>
+            </div>
+            <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl tracking-wider text-white mb-4 reveal">
+                KON MAKANDRA OSO
+            </h1>
+            <p class="text-xl md:text-2xl text-gold tracking-widest uppercase mb-8 reveal">
+                Winti Kennis Centrum – Suriname
+            </p>
+            
+            <div class="flex flex-wrap justify-center gap-4 mb-12 text-sm md:text-base text-gray-300 tracking-widest uppercase reveal">
+                <span>Kennis</span>
+                <span class="text-gold">•</span>
+                <span>Cultuur</span>
+                <span class="text-gold">•</span>
+                <span>Spiritualiteit</span>
+                <span class="text-gold">•</span>
+                <span>Educatie</span>
+                <span class="text-gold">•</span>
+                <span>Verbinding</span>
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-6 reveal">
+                <a href="#fundometer" class="px-8 py-4 bg-gold text-navy font-semibold tracking-wide hover:bg-white transition duration-300 shadow-lg shadow-gold/20">
+                    Steun de ontwikkelfase
+                </a>
+                <a href="#stakeholder" class="px-8 py-4 border border-white text-white font-semibold tracking-wide hover:bg-white hover:text-navy transition duration-300">
+                    Word ambassadeur
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FUNDOMETER TRACKER ================= -->
+    <!-- FIX: Removed -mt-20 and added pt-12 to prevent overlap with hero section -->
+    <section id="fundometer" class="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-24 reveal">
+        <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-8 md:p-12 shadow-2xl rounded-sm">
+            <div class="text-center mb-8">
+                <h2 class="font-serif text-3xl md:text-4xl text-white mb-2">Fundometer Ontwikkelfase</h2>
+                <p class="text-gray-400">Help ons de initiële architectuur- en erfgoedfase te realiseren.</p>
+            </div>
+            
+            <!-- PLACEHOLDER: Update amounts and target below -->
+            <div class="mb-4 flex justify-between text-sm md:text-base font-semibold tracking-wide">
+                <span class="text-gold">€125.000 Opgehaald</span>
+                <span class="text-gray-400">Doel: €500.000</span>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="w-full bg-navy/80 rounded-full h-4 mb-10 border border-white/10 overflow-hidden">
+                <!-- PLACEHOLDER: Update width percentage -->
+                <div class="bg-gradient-to-r from-timber to-gold h-full rounded-full transition-all duration-1000 ease-out" style="width: 25%;"></div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <button class="py-3 border border-gold/50 text-gold hover:bg-gold hover:text-navy transition font-semibold">€25</button>
+                <button class="py-3 border border-gold/50 text-gold hover:bg-gold hover:text-navy transition font-semibold">€50</button>
+                <button class="py-3 border border-gold/50 text-gold hover:bg-gold hover:text-navy transition font-semibold">€100</button>
+                <button class="py-3 border border-gold/50 text-gold hover:bg-gold hover:text-navy transition font-semibold">Eigen bedrag</button>
+            </div>
+
+            <div class="text-center">
+                <a href="#" class="inline-flex items-center text-sm tracking-wide text-gray-300 hover:text-gold transition border-b border-transparent hover:border-gold pb-1">
+                    <i class="fa-solid fa-file-pdf mr-2 text-gold"></i> Download Projectmemorandum (PDF)
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= MISSIE & VISIE ================= -->
+    <section id="mission" class="py-24 md:py-32 bg-navy">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <!-- Requested Heading: Van visie naar werkelijkheid -->
+                    <h2 class="font-serif text-4xl md:text-5xl text-white mb-8 leading-tight">
+                        Van visie naar werkelijkheid,<br>
+                        <span class="text-gold italic">Van mondelinge geschiedenis naar erfgoed.</span>
+                    </h2>
+                    <div class="space-y-6 text-gray-300 leading-relaxed text-lg">
+                        <p>
+                            Kon Makandra Oso is meer dan een architectonisch monument; het is een levendig depot van Afro-Surinaamse wijsheid. Generaties lang is Winti-kennis, rituelen en mondelinge geschiedenis gemarginaliseerd en verborgen gebleven.
+                        </p>
+                        <p>
+                            Dit centrum transformeert dat verhaal. Door een fysiek en spiritueel thuis te creëren voor Winti-kennis, maken we de overgang van verborgen tradities naar toegankelijk erfgoed, en waarborgen we de overdracht op meerdere generaties door middel van onderwijs, onderzoek en gemeenschapsverbinding.
+                        </p>
+                        <p>
+                            Geïnspireerd op de piramides van Kemet en het traditionele Winti-cosmogram, is het gebouw zelf een statement van het terugclaimen van identiteit, het bevorderen van waardigheid en het bouwen aan een duurzame toekomst geworteld in voorouderlijke wijsheid.
+                        </p>
+                    </div>
+                </div>
+                <div class="reveal relative">
+                    <!-- Replace with your Maquette or Side View Render -->
+                    <img src="images/side-view-materials.jpg" alt="Architectonisch Zijaanzicht en Materialen" class="w-full h-auto rounded shadow-2xl border border-white/10">
+                    <div class="absolute -bottom-6 -left-6 bg-gold text-navy p-6 hidden md:block max-w-xs">
+                        <p class="font-serif text-xl italic font-bold">"Een plek waar verleden, heden en toekomst samenkomen in kennis, rituelen, gemeenschap en bewustwording."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= ARCHITECTUURVISIE (11 ZONES) ================= -->
+    <section id="architecture" class="py-24 bg-offwhite text-navy">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-serif text-4xl md:text-5xl text-navy mb-4">Architectuurvisie</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">Verken de 11 functionele zones die zijn ontworpen voor leren, ritueel en gemeenschap.</p>
+            </div>
+
+            <!-- Interactive Tabs -->
+            <div class="grid lg:grid-cols-3 gap-12">
+                <!-- Zone List Sidebar -->
+                <div class="lg:col-span-1 space-y-3 reveal">
+                    <button class="zone-tab active w-full text-left px-5 py-4 border border-gray-200 bg-white hover:bg-gray-50 transition flex items-center" onclick="openZone(1)">
+                        <span class="text-gold font-bold mr-3">1</span> Top / Spirituele Ruimte
+                    </button>
+                    <button class="zone-tab w-full text-left px-5 py-4 border border-gray-200 bg-white hover:bg-gray-50 transition flex items-center" onclick="openZone(2)">
+                        <span class="text-gold font-bold mr-3">2</span> Centrale Atrium
+                    </button>
+                    <button class="zone-tab w-full text-left px-5 py-4 border border-gray-200 bg-white hover:bg-gray-50 transition flex items-center" onclick="openZone(3)">
+                        <span class="text-gold font-bold mr-3">3</span> Aula / Grote Zaal
+                    </button>
+                    <button class="zone-tab w-full text-left px-5 py-4 border border-gray-200 bg-white hover:bg-gray-50 transition flex items-center" onclick="openZone(4)">
+                        <span class="text-gold font-bold mr-3">4</span> Klaslokalen / Workshops
+                    </button>
+                    <button class="zone-tab w-full text-left px-5 py-4 border border-gray-200 bg-white hover:bg-gray-50 transition flex items-center" onclick="openZone(5)">
+                        <span class="text-gold font-bold mr-3">5</span> Bibliotheek & Onderzoekscentrum
+                    </button>
+                    <button class="zone-tab w-full text-left px-5 py-4 border border-gray-200 bg-white hover:bg-gray-50 transition flex items-center" onclick="openZone(6)">
+                        <span class="text-gold font-bold mr-3">6</span> Tentoonstellingsruimte
+                    </button>
+                    <button class="zone-tab w-full text-left px-5 py-4 border border-gray-200 bg-white hover:bg-gray-50 transition flex items-center" onclick="openZone(7)">
+                        <span class="text-gold font-bold mr-3">7</span> Receptie / Entree
+                    </button>
+                    <button class="zone-tab w-full text-left px-5 py-4 border border-gray-200 bg-white hover:bg-gray-50 transition flex items-center" onclick="openZone(8)">
+                        <span class="text-gold font-bold mr-3">8</span> Tuinen & Waterpartijen
+                    </button>
+                    <button class="zone-tab w-full text-left px-5 py-4 border border-gray-200 bg-white hover:bg-gray-50 transition flex items-center" onclick="openZone(9)">
+                        <span class="text-gold font-bold mr-3">9</span> Verblijfsruimte / Gasten
+                    </button>
+                    <button class="zone-tab w-full text-left px-5 py-4 border border-gray-200 bg-white hover:bg-gray-50 transition flex items-center" onclick="openZone(10)">
+                        <span class="text-gold font-bold mr-3">10</span> Eten & Drinken
+                    </button>
+                    <button class="zone-tab w-full text-left px-5 py-4 border border-gray-200 bg-white hover:bg-gray-50 transition flex items-center" onclick="openZone(11)">
+                        <span class="text-gold font-bold mr-3">11</span> Kantoren / Projectruimtes
+                    </button>
+                </div>
+
+                <!-- Zone Display Area -->
+                <div class="lg:col-span-2 reveal">
+                    <div class="bg-white p-4 shadow-xl border border-gray-100 h-full flex flex-col">
+                        <div class="relative overflow-hidden mb-6 h-96 bg-navy/10 flex items-center justify-center">
+                            <!-- Dynamic Image (Defaulting to Zone 1) -->
+                            <img id="zone-image" src="images/zone-1-spiritual.jpg" alt="Architecturale Zone" class="w-full h-full object-cover gallery-img transition-opacity duration-300">
+                            <div class="absolute top-4 right-4 bg-gold text-navy font-bold px-3 py-1 text-sm">ZONE <span id="zone-number">1</span></div>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 id="zone-title" class="font-serif text-3xl text-navy mb-4">Top / Spirituele Ruimte</h3>
+                            <p id="zone-desc" class="text-gray-600 leading-relaxed mb-6">
+                                Meditatie, rituelen, sterrenkennis. Het hoogste punt van het gebouw, ontworpen voor stilte, reflectie en verbinding met de kosmos. Het dient als een heilige ruimte voor Winti-rituelen en spirituele praktijken.
+                            </p>
+                            <div class="flex gap-6 text-sm text-gray-500">
+                                <span><i class="fa-solid fa-expand mr-1 text-gold"></i> Panoramisch Uitzicht</span>
+                                <span><i class="fa-solid fa-moon mr-1 text-gold"></i> Rituele Ruimte</span>
+                                <span><i class="fa-solid fa-leaf mr-1 text-gold"></i> Natuurlijke Ventilatie</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= STRATEGISCHE PARTNERS ================= -->
+    <section id="partners" class="py-24 bg-navy border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
+            <h2 class="font-serif text-4xl text-white mb-4">Strategische partners</h2>
+            <p class="text-gray-400 mb-12 max-w-2xl mx-auto">Samenwerken met gerenommeerde instellingen om het Afro-Surinaamse erfgoed te behouden en te promoten.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-center opacity-80">
+                <!-- Partner 1: Replace with Official Logo -->
+                <div class="p-6 border border-white/20 hover:border-gold transition duration-300 flex flex-col items-center justify-center h-40 rounded-sm bg-white/5">
+                    <span class="text-gold text-3xl mb-3"><i class="fa-solid fa-hands-holding-circle"></i></span>
+                    <span class="text-sm font-semibold tracking-widest text-gray-200 text-center">Stichting LaReFo / Yeyetakiseti<br><span class="text-xs font-normal text-gray-400">Amsterdam</span></span>
+                </div>
+                <!-- Partner 2: Replace with Official Logo -->
+                <div class="p-6 border border-white/20 hover:border-gold transition duration-300 flex flex-col items-center justify-center h-40 rounded-sm bg-white/5">
+                    <span class="text-gold text-3xl mb-3"><i class="fa-solid fa-tree"></i></span>
+                    <span class="text-sm font-semibold tracking-widest text-gray-200 text-center">Stichting Okomfo Fu Kondre<br><span class="text-xs font-normal text-gray-400">Amadofiye Yangasa – Suriname</span></span>
+                </div>
+                <!-- Partner 3: Replace with Official Logo -->
+                <div class="p-6 border border-white/20 hover:border-gold transition duration-300 flex flex-col items-center justify-center h-40 rounded-sm bg-white/5">
+                    <span class="text-gold text-3xl mb-3"><i class="fa-solid fa-bullhorn"></i></span>
+                    <span class="text-sm font-semibold tracking-widest text-gray-200 text-center">Akuba Communications<br><span class="text-xs font-normal text-gray-400">Project Lead / Project Development</span></span>
+                </div>
+                <!-- Partner 4: Replace with Official Logo -->
+                <div class="p-6 border border-white/20 hover:border-gold transition duration-300 flex flex-col items-center justify-center h-40 rounded-sm bg-white/5">
+                    <span class="text-gold text-3xl mb-3"><i class="fa-solid fa-scale-balanced"></i></span>
+                    <span class="text-sm font-semibold tracking-widest text-gray-200 text-center">Stichting Comité 30 juni / 1 juli<br><span class="text-xs font-normal text-gray-400">Stichtse Vecht</span></span>
+                </div>
+            </div>
+            <!-- Note for user -->
+            <p class="text-xs text-gray-500 mt-8 italic">* Vervang de bovenstaande tekstplaceholders door de officiële logo's van de organisaties.</p>
+        </div>
+    </section>
+
+    <!-- ================= AMBASSADEUR FORMULIER ================= -->
+    <section id="stakeholder" class="py-24 bg-navy">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-8 md:p-12 shadow-2xl rounded-sm reveal">
+                <div class="text-center mb-10">
+                    <h2 class="font-serif text-4xl text-white mb-4">Word ambassadeur</h2>
+                    <p class="text-gray-400">Sluit je aan bij ons netwerk van diaspora-leiders, onderzoekers en partners.</p>
+                </div>
+
+                <form class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Volledige naam *</label>
+                            <input type="text" class="w-full bg-navy/50 border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-gold transition rounded-sm" placeholder="Uw naam">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Organisatie / Vakgebied</label>
+                            <input type="text" class="w-full bg-navy/50 border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-gold transition rounded-sm" placeholder="Bijv. Universiteit van Amsterdam, Historicus">
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">E-mailadres *</label>
+                            <input type="email" class="w-full bg-navy/50 border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-gold transition rounded-sm" placeholder="uw@email.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Telefoonnummer</label>
+                            <input type="tel" class="w-full bg-navy/50 border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-gold transition rounded-sm" placeholder="+31 6 12345678">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Bijdragegebied *</label>
+                        <select class="w-full bg-navy/50 border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-gold transition appearance-none rounded-sm">
+                            <option value="" disabled selected>Selecteer een optie</option>
+                            <option value="donor">Institutionele Donor / Financiering</option>
+                            <option value="researcher">Onderzoeker / Academicus</option>
+                            <option value="ambassador">Community Ambassadeur / Diaspora Leider</option>
+                            <option value="partner">Strategische Partner</option>
+                            <option value="volunteer">Vrijwilliger / Adviseur</option>
+                        </select>
+                    </div>
+
+                    <div class="pt-4">
+                        <button type="button" class="w-full py-4 bg-gold text-navy font-bold tracking-widest hover:bg-white transition duration-300 rounded-sm">
+                            Verstuur interesse
+                        </button>
+                    </div>
+                    <p class="text-xs text-center text-gray-500 mt-4">Wij respecteren uw privacy. Uw gegevens worden alleen gebruikt voor het Kon Makandra Oso-project.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= ONTWIKKELPLAN 2026–2030 ================= -->
+    <section id="roadmap" class="py-24 bg-navy border-t border-white/10">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-serif text-4xl md:text-5xl text-white mb-4">Ontwikkelplan 2026–2030</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Van masterplan naar realisatie: onze strategische tijdlijn voor 2026–2030.</p>
+            </div>
+
+            <div class="relative reveal">
+                <!-- Desktop Timeline Line -->
+                <div class="timeline-line hidden md:block"></div>
+                <!-- Mobile Timeline Line -->
+                <div class="absolute left-5 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-gold via-timber to-transparent transform -translate-x-1/2 md:-translate-x-1/2"></div>
+
+                <div class="space-y-12">
+                    <!-- PLACEHOLDER: Update years and descriptions below -->
+                    
+                    <!-- 2026 -->
+                    <div class="flex flex-col md:flex-row items-center w-full">
+                        <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 pl-12 md:pl-0">
+                            <h3 class="text-gold font-serif text-3xl mb-2">2026</h3>
+                            <h4 class="text-white font-semibold text-xl mb-2">Masterplan & Architectonisch Concept</h4>
+                            <p class="text-gray-400 text-sm">Afronden van het architectonisch ontwerp, veiligstellen van grondvergunningen en opzetten van de bestuurlijke structuur.</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-full border-4 border-navy bg-gold z-10 absolute left-0 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center">
+                            <div class="w-3 h-3 bg-navy rounded-full"></div>
+                        </div>
+                        <div class="md:w-1/2 md:pl-12"></div>
+                    </div>
+
+                    <!-- 2027 -->
+                    <div class="flex flex-col md:flex-row items-center w-full">
+                        <div class="md:w-1/2 md:pr-12"></div>
+                        <div class="w-10 h-10 rounded-full border-4 border-navy bg-timber z-10 absolute left-0 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center">
+                            <div class="w-3 h-3 bg-navy rounded-full"></div>
+                        </div>
+                        <div class="md:w-1/2 md:pl-12 mb-4 md:mb-0 pl-12 md:pl-12">
+                            <h3 class="text-gold font-serif text-3xl mb-2">2027</h3>
+                            <h4 class="text-white font-semibold text-xl mb-2">Financiering & Institutionele Partnerschappen</h4>
+                            <p class="text-gray-400 text-sm">Lanceren van de internationale fondsenwervingscampagne, veiligstellen van subsidies en formaliseren van partnerschappen met erfgoedinstellingen.</p>
+                        </div>
+                    </div>
+
+                    <!-- 2028 -->
+                    <div class="flex flex-col md:flex-row items-center w-full">
+                        <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 pl-12 md:pl-0">
+                            <h3 class="text-gold font-serif text-3xl mb-2">2028</h3>
+                            <h4 class="text-white font-semibold text-xl mb-2">Bouwfase I</h4>
+                            <p class="text-gray-400 text-sm">Ceremonie voor de eerste steen, voorbereiding van de locatie en bouw van de fundering en het structurele frame.</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-full border-4 border-navy bg-timber z-10 absolute left-0 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center">
+                            <div class="w-3 h-3 bg-navy rounded-full"></div>
+                        </div>
+                        <div class="md:w-1/2 md:pl-12"></div>
+                    </div>
+
+                    <!-- 2029 -->
+                    <div class="flex flex-col md:flex-row items-center w-full">
+                        <div class="md:w-1/2 md:pr-12"></div>
+                        <div class="w-10 h-10 rounded-full border-4 border-navy bg-timber z-10 absolute left-0 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center">
+                            <div class="w-3 h-3 bg-navy rounded-full"></div>
+                        </div>
+                        <div class="md:w-1/2 md:pl-12 mb-4 md:mb-0 pl-12 md:pl-12">
+                            <h3 class="text-gold font-serif text-3xl mb-2">2029</h3>
+                            <h4 class="text-white font-semibold text-xl mb-2">Interieur & Landschapsintegratie</h4>
+                            <p class="text-gray-400 text-sm">Ontwikkeling van de 11 functionele zones, installatie van duurzame energiesystemen en aanleg van de tuinen.</p>
+                        </div>
+                    </div>
+
+                    <!-- 2030 -->
+                    <div class="flex flex-col md:flex-row items-center w-full">
+                        <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 pl-12 md:pl-0">
+                            <h3 class="text-gold font-serif text-3xl mb-2">2030</h3>
+                            <h4 class="text-white font-semibold text-xl mb-2">Grote Opening & Lancering Kenniscentrum</h4>
+                            <p class="text-gray-400 text-sm">Officiële inhuldiging, opening van de bibliotheek, tentoonstellingsruimtes en start van de educatieve programma's.</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-full border-4 border-navy bg-gold z-10 absolute left-0 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center">
+                            <div class="w-3 h-3 bg-navy rounded-full"></div>
+                        </div>
+                        <div class="md:w-1/2 md:pl-12"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-navy border-t border-white/10 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center mb-4 md:mb-0">
+                <span class="text-gold text-xl mr-2"><i class="fa-solid fa-ankh"></i></span>
+                <span class="font-serif text-lg tracking-widest text-white">KON MAKANDRA OSO</span>
+            </div>
+            <div class="text-gray-500 text-sm text-center md:text-right">
+                <p>&copy; 2026 Kon Makandra Oso – Winti Kennis Centrum Suriname. Alle rechten voorbehouden.</p>
+                <p class="mt-1">Stagingomgeving – Alleen voor investeerders- en belanghebbendenpresentaties.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        // 1. Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 2. Intersection Observer for Scroll Animations
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // 3. Interactive Architectural Zones Data & Logic
+        const zones = {
+            1: {
+                title: "Top / Spirituele Ruimte",
+                desc: "Meditatie, rituelen, sterrenkennis. Het hoogste punt van het gebouw, ontworpen voor stilte, reflectie en verbinding met de kosmos. Het dient als een heilige ruimte voor Winti-rituelen en spirituele praktijken.",
+                img: "images/zone-1-spiritual.jpg"
+            },
+            2: {
+                title: "Centrale Atrium",
+                desc: "Ontmoeting, evenementen, ceremonie. Het hart van het gebouw, een grote open ruimte die alle niveaus met elkaar verbindt. Het heeft een centrale fontein en een torenhoge houten pilaar versierd met traditionele gravures.",
+                img: "images/zone-2-atrium.jpg"
+            },
+            3: {
+                title: "Aula / Grote Zaal",
+                desc: "Lezingen, conferenties, film, optredens. Een multifunctionele auditorium ontworpen voor grote bijeenkomsten, lezingen en culturele optredens. Uitgerust met state-of-the-art audiovisuele technologie.",
+                img: "images/zone-3-aula.jpg"
+            },
+            4: {
+                title: "Klaslokalen / Workshops",
+                desc: "Onderwijs, trainingen, kennisoverdracht. Flexibele educatieve ruimtes ontworpen voor workshops, taalcursussen en culturele trainingsprogramma's voor alle leeftijden.",
+                img: "images/zone-4-classrooms.jpg"
+            },
+            5: {
+                title: "Bibliotheek & Onderzoekscentrum",
+                desc: "Archief, digitale kennis, studieplekken. Een uitgebreid onderzoekscentrum met boeken, digitale archieven en mondelinge geschiedenisopnames gewijd aan het Afro-Surinaamse erfgoed.",
+                img: "images/zone-5-library.jpg"
+            },
+            6: {
+                title: "Tentoonstellingsruimte",
+                desc: "Geschiedenis, kunst, cultuur. Een dynamische galerieruimte voor permanente en tijdelijke tentoonstellingen van historische artefacten, hedendaagse kunst en culturele verhalen.",
+                img: "images/zone-6-exhibition.jpg"
+            },
+            7: {
+                title: "Receptie / Entree",
+                desc: "Ontvangst, informatie, winkel. De gastvrije toegangspoort tot het centrum, met bezoekersinformatie, ticketverkoop en een winkel voor lokale ambachtslieden en culturele goederen.",
+                img: "images/zone-7-reception.jpg"
+            },
+            8: {
+                title: "Tuinen & Waterpartijen",
+                desc: "Natuur, zuivering, rust, ritueel. Weelderige botanische tuinen met inheemse Surinaamse planten, waterpartijen voor zuiveringsrituelen en rustige paden voor reflectie.",
+                img: "images/zone-8-gardens.jpg"
+            },
+            9: {
+                title: "Verblijfsruimte / Gasten",
+                desc: "Onderzoekers, kunstenaars, elders. Comfortabele accommodatie op het terrein voor gastonderzoekers, artists-in-residence en elders die deelnemen aan kennisoverdrachtsprogramma's.",
+                img: "images/zone-9-residence.jpg"
+            },
+            10: {
+                title: "Eten & Drinken",
+                desc: "Restaurant, community kitchen. Een culinaire ruimte met traditionele Surinaamse gerechten en gezonde opties, die gemeenschapsbinding bevordert tijdens het eten.",
+                img: "images/zone-10-food.jpg"
+            },
+            11: {
+                title: "Kantoren / Projectruimtes",
+                desc: "Team, administratie, overleg. Administratief hoofdkwartier en collaboratieve werkruimtes voor het personeel, onderzoekers en projectteams van het centrum.",
+                img: "images/zone-11-offices.jpg"
+            }
+        };
+
+        function openZone(zoneId) {
+            // Update active tab styling
+            const tabs = document.querySelectorAll('.zone-tab');
+            tabs.forEach((tab, index) => {
+                if (index + 1 === zoneId) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+
+            // Update content
+            const zone = zones[zoneId];
+            document.getElementById('zone-number').textContent = zoneId;
+            document.getElementById('zone-title').textContent = zone.title;
+            document.getElementById('zone-desc').textContent = zone.desc;
+            
+            // Update image with a subtle fade effect
+            const imgElement = document.getElementById('zone-image');
+            imgElement.style.opacity = '0';
+            setTimeout(() => {
+                imgElement.src = zone.img;
+                imgElement.style.opacity = '1';
+            }, 200);
+        }
+
+        // 4. Navbar scroll shadow effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-2xl', 'bg-navy/95');
+            } else {
+                navbar.classList.remove('shadow-2xl', 'bg-navy/95');
+            }
+        });
+    </script>
+</body>
+</html>
