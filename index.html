@@ -23,15 +23,15 @@
             theme: {
                 extend: {
                     colors: {
-                        zand: '#F9F6EF',      // Zand / Off-white
-                        aarde: '#E8DCC4',     // Aarde / Beige
-                        hout: '#8B5E3C',      // Hout / Bruin
-                        natuur: '#2E6B3F',    // Groen / Natuur
-                        water: '#2F6F9F',     // Blauw / Water
-                        ingi: '#C23B22',      // Rood / Ingi
-                        goud: '#C9A44E',      // Goud / Accent
-                        diepblauw: '#1B2A4A', // Diepblauw
-                        warmwhite: '#FDFBF7', // Extra warm white for contrast
+                        zand: '#F9F6EF',
+                        aarde: '#E8DCC4',
+                        hout: '#8B5E3C',
+                        natuur: '#2E6B3F',
+                        water: '#2F6F9F',
+                        ingi: '#C23B22',
+                        goud: '#C9A44E',
+                        diepblauw: '#1B2A4A',
+                        warmwhite: '#FDFBF7',
                     },
                     fontFamily: {
                         serif: ['"Cormorant Garamond"', 'serif'],
@@ -41,18 +41,237 @@
             }
         }
     </script>
-   
-</head>
-<body class="font-sans antialiased text-diepblauw">
 
-    <!-- Winti Color Accent Stripe (Top) - Exactly as shown in guide -->
+    <style>
+        /* ===== PASSCODE LOCK SCREEN STYLES ===== */
+        #passcode-lock {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, #0b1120 0%, #1B2A4A 60%, #2F6F9F 100%);
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #passcode-lock.unlocked {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Subtle Winti color stripe on lock screen */
+        .lock-stripe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            display: flex;
+        }
+        .lock-stripe > div { flex: 1; }
+
+        .lock-card {
+            width: 100%;
+            max-width: 440px;
+            margin: 1.5rem;
+            background: rgba(249, 246, 239, 0.97);
+            backdrop-filter: blur(12px);
+            border: 1px solid #E8DCC4;
+            border-radius: 4px;
+            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(201, 164, 78, 0.15);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            animation: lockFadeIn 0.6s ease both;
+        }
+
+        @keyframes lockFadeIn {
+            from { opacity: 0; transform: translateY(16px) scale(0.98); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .lock-icon-wrap {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 1.4rem;
+            border-radius: 50%;
+            background: #1B2A4A;
+            border: 2px solid #C9A44E;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 24px -10px rgba(27, 42, 74, 0.6);
+        }
+
+        .lock-icon-wrap i {
+            font-size: 1.8rem;
+            color: #C9A44E;
+        }
+
+        .lock-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: #1B2A4A;
+            margin-bottom: 0.35rem;
+        }
+
+        .lock-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #8B5E3C;
+            margin-bottom: 1.8rem;
+        }
+
+        .lock-input {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            letter-spacing: 0.15em;
+            text-align: center;
+            color: #1B2A4A;
+            background: #F9F6EF;
+            border: 1.5px solid #E8DCC4;
+            border-radius: 3px;
+            outline: none;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .lock-input::placeholder {
+            color: #b3a68c;
+            letter-spacing: 0.1em;
+        }
+
+        .lock-input:focus {
+            border-color: #C9A44E;
+            box-shadow: 0 0 0 3px rgba(201, 164, 78, 0.2);
+        }
+
+        .lock-input.error {
+            border-color: #C23B22;
+            box-shadow: 0 0 0 3px rgba(194, 59, 34, 0.15);
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-5px); }
+            80% { transform: translateX(5px); }
+        }
+
+        .lock-btn {
+            width: 100%;
+            margin-top: 1rem;
+            padding: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #FDFBF7;
+            background: #1B2A4A;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.25s ease, transform 0.15s ease;
+        }
+
+        .lock-btn:hover {
+            background: #8B5E3C;
+        }
+
+        .lock-btn:active {
+            transform: scale(0.98);
+        }
+
+        .lock-error-msg {
+            margin-top: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: #C23B22;
+            min-height: 1.2em;
+            font-weight: 500;
+        }
+
+        .lock-footer {
+            margin-top: 1.8rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #8B5E3C;
+            opacity: 0.7;
+        }
+
+        /* Prevent body scroll while locked */
+        body.locked {
+            overflow: hidden;
+        }
+
+        /* Hide main site content until unlocked */
+        #site-content {
+            display: none;
+        }
+        #site-content.visible {
+            display: block;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-diepblauw locked">
+
+    <!-- ================= PASSCODE LOCK SCREEN ================= -->
+    <div id="passcode-lock">
+        <div class="lock-stripe">
+            <div style="background:#8B5E3C;"></div>
+            <div style="background:#FFFFFF;"></div>
+            <div style="background:#2F6F9F;"></div>
+            <div style="background:#1B2A4A;"></div>
+            <div style="background:#C23B22;"></div>
+            <div style="background:#2E6B3F;"></div>
+        </div>
+
+        <div class="lock-card">
+            <div class="lock-icon-wrap">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <h1 class="lock-title">Kon Makandra Oso</h1>
+            <p class="lock-subtitle">Beveiligde Toegang</p>
+
+            <input
+                type="password"
+                id="passcode-input"
+                class="lock-input"
+                placeholder="Voer toegangscode in"
+                autocomplete="off"
+                autofocus
+            >
+
+            <button id="unlock-btn" class="lock-btn">Ontgrendel</button>
+
+            <p id="lock-error" class="lock-error-msg"></p>
+
+            <p class="lock-footer">Winti Kennis Centrum · Suriname</p>
+        </div>
+    </div>
+
+    <!-- ================= MAIN SITE CONTENT (HIDDEN UNTIL UNLOCK) ================= -->
+    <div id="site-content">
+
+    <!-- Winti Color Accent Stripe (Top) -->
     <div class="h-1.5 w-full flex">
-        <div class="flex-1 bg-[#8B5E3C]"></div> <!-- Hout/Bruin -->
-        <div class="flex-1 bg-[#FFFFFF]"></div> <!-- Wit -->
-        <div class="flex-1 bg-[#2F6F9F]"></div> <!-- Blauw/Water -->
-        <div class="flex-1 bg-[#1B2A4A]"></div> <!-- Diepblauw -->
-        <div class="flex-1 bg-[#C23B22]"></div> <!-- Rood/Ingi -->
-        <div class="flex-1 bg-[#2E6B3F]"></div> <!-- Groen/Natuur -->
+        <div class="flex-1 bg-[#8B5E3C]"></div>
+        <div class="flex-1 bg-[#FFFFFF]"></div>
+        <div class="flex-1 bg-[#2F6F9F]"></div>
+        <div class="flex-1 bg-[#1B2A4A]"></div>
+        <div class="flex-1 bg-[#C23B22]"></div>
+        <div class="flex-1 bg-[#2E6B3F]"></div>
     </div>
 
     <!-- ================= NAVIGATION ================= -->
@@ -61,8 +280,6 @@
             <div class="flex justify-between items-center h-20">
                 <div class="flex-shrink-0 flex items-center">
                     <img class="py-2" src="./logo.png" width="70">
-                    <!-- <span class="text-hout text-2xl mr-2"><i class="fa-solid fa-ankh"></i></span>
-                    <span class="font-serif text-xl tracking-widest text-diepblauw">KON MAKANDRA OSO</span> -->
                 </div>
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-8 items-center">
@@ -98,10 +315,8 @@
 
     <!-- ================= HERO SECTION ================= -->
     <section id="home" class="relative min-h-screen flex items-center justify-center pt-20">
-        <!-- Background Image: Replace with your Hero Render -->
         <div class="absolute inset-0 z-0">
             <img src="./hero.jpeg" alt="Kon Makandra Oso Vooraanzicht" class="w-full h-full object-cover">
-            <!-- Gradient overlay fading to warm white at the bottom -->
             <div class="absolute inset-0 bg-gradient-to-b from-diepblauw/90 via-diepblauw/30 to-zand"></div>
         </div>
 
@@ -147,15 +362,12 @@
                 <p class="text-hout">Help ons de initiële architectuur- en erfgoedfase te realiseren.</p>
             </div>
             
-            <!-- PLACEHOLDER: Update amounts and target below -->
             <div class="mb-4 flex justify-between text-sm md:text-base font-semibold tracking-wide">
                 <span class="text-hout">€125.000 Opgehaald</span>
                 <span class="text-diepblauw/70">Doel: €500.000</span>
             </div>
             
-            <!-- Progress Bar -->
             <div class="w-full bg-aarde rounded-full h-4 mb-10 border border-hout/20 overflow-hidden">
-                <!-- PLACEHOLDER: Update width percentage -->
                 <div class="bg-gradient-to-r from-hout to-goud h-full rounded-full transition-all duration-1000 ease-out" style="width: 25%;"></div>
             </div>
 
@@ -176,7 +388,6 @@
 
     <!-- ================= MISSIE & VISIE ================= -->
     <section id="mission" class="mt-10 py-24 md:py-32 bg-aarde/30 texture-bg relative">
-        <!-- Subtle Water Symbolism -->
         <div class="absolute top-10 left-10 text-water/10 text-9xl pointer-events-none"><i class="fa-solid fa-water"></i></div>
         <div class="absolute bottom-10 right-10 text-natuur/10 text-9xl pointer-events-none"><i class="fa-solid fa-tree"></i></div>
         
@@ -200,7 +411,6 @@
                     </div>
                 </div>
                 <div class="reveal relative">
-                    <!-- Replace with your Maquette or Side View Render -->
                     <div class="natural-frame">
                         <img src="./sideview.jpeg" alt="Architectonisch Zijaanzicht en Materialen" class="w-full h-auto">
                     </div>
@@ -226,7 +436,6 @@
 
     <!-- ================= ARCHITECTUURVISIE (11 ZONES) ================= -->
     <section id="architecture" class="py-24 bg-zand texture-bg relative">
-        <!-- Subtle Bird Symbolism -->
         <div class="absolute top-20 right-10 text-hout/5 text-9xl pointer-events-none"><i class="fa-solid fa-dove"></i></div>
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -236,9 +445,7 @@
                 <p class="text-diepblauw/80 max-w-2xl mx-auto text-base mt-2">Kon Makandra Oso is een plek waar kennis, cultuur, spiritualiteit, natuur en gemeenschap samenkomen. De architectuur is geïnspireerd op de monumentale principes van Oud Kemet, maar vertaald naar een Surinaamse context met natuurlijke materialen, open ruimtes en een sterke verbinding met de natuur.</p>
             </div>
 
-            <!-- Interactive Tabs -->
             <div class="grid lg:grid-cols-3 gap-12">
-                <!-- Zone List Sidebar -->
                 <div class="lg:col-span-1 space-y-3 reveal">
                     <button class="zone-tab active w-full text-left px-5 py-4 border transition flex items-center" onclick="openZone(1)">
                         <span class="text-goud font-bold mr-3">1</span> Top / Spirituele Ruimte
@@ -275,11 +482,9 @@
                     </button>
                 </div>
 
-                <!-- Zone Display Area -->
                 <div class="lg:col-span-2 reveal">
                     <div class="bg-warmwhite p-4 shadow-lg border border-aarde h-full flex flex-col">
                         <div class="relative overflow-hidden mb-6 h-96 bg-aarde/30 flex items-center justify-center border border-hout/20">
-                            <!-- Dynamic Image (Defaulting to Zone 1) -->
                             <img id="zone-image" src="./spiritual.jpeg" alt="Architecturale Zone" class="w-full h-full object-cover gallery-img transition-opacity duration-300">
                             <div class="absolute top-4 right-4 bg-goud text-diepblauw font-bold px-3 py-1 text-sm shadow-md">ZONE <span id="zone-number">1</span></div>
                         </div>
@@ -308,7 +513,6 @@
 
     <!-- ================= STRATEGISCHE PARTNERS ================= -->
     <section id="partners" class="py-24 bg-aarde/20 border-t border-aarde texture-bg relative">
-        <!-- Subtle Roots Symbolism -->
         <div class="absolute bottom-10 left-10 text-natuur/5 text-9xl pointer-events-none"><i class="fa-solid fa-seedling"></i></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal relative z-10">
@@ -316,28 +520,24 @@
             <p class="text-hout mb-12 max-w-2xl mx-auto font-medium">Samen bouwen aan kennis, erfgoed en toekomst.</p>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <!-- Partner 1: Replace with Official Logo -->
                 <div class="p-8 border border-hout/30 hover:border-goud transition duration-300 flex flex-col items-center justify-center h-48 rounded-sm bg-warmwhite shadow-md">
                 <span class="text-hout text-4xl mb-4">
                     <img src="./1.png" width="100">
                 </span>
                     <span class="text-base font-bold tracking-widest text-diepblauw text-center">Stichting Yeyetakiseti<br><span class="text-sm font-normal text-hout mt-1 block">Amsterdam</span></span>
                 </div>
-                <!-- Partner 2: Replace with Official Logo -->
                 <div class="p-8 border border-hout/30 hover:border-goud transition duration-300 flex flex-col items-center justify-center h-48 rounded-sm bg-warmwhite shadow-md">
                     <span class="text-hout text-4xl mb-4">
                     <img src="./2.png" width="100">    
                     </span>
                     <span class="text-base font-bold tracking-widest text-diepblauw text-center">Stichting Okomfo Fu Kondre<br><span class="text-sm font-normal text-hout mt-1 block">Amadofiye Yangasa – Suriname</span></span>
                 </div>
-                <!-- Partner 3: Replace with Official Logo -->
                 <div class="p-8 border border-hout/30 hover:border-goud transition duration-300 flex flex-col items-center justify-center h-48 rounded-sm bg-warmwhite shadow-md">
                     <span class="text-hout text-4xl mb-4">
                         <img src="./4.png" width="100">
                     </span>
                     <span class="text-base font-bold tracking-widest text-diepblauw text-center">Akuba Communications<br><span class="text-sm font-normal text-hout mt-1 block">Projectleiding / Projectontwikkeling</span></span>
                 </div>
-                <!-- Partner 4: Replace with Official Logo -->
                 <div class="p-8 border border-hout/30 hover:border-goud transition duration-300 flex flex-col items-center justify-center h-48 rounded-sm bg-warmwhite shadow-md">
                     <span class="text-hout text-4xl mb-4">
                         <img src="./3.png" width="100">
@@ -345,7 +545,6 @@
                     <span class="text-base font-bold tracking-widest text-diepblauw text-center">Stichting Comité 30 juni / 1 juli<br><span class="text-sm font-normal text-hout mt-1 block">Stichtse Vecht</span></span>
                 </div>
             </div>
-            <!-- Note for user -->
             <p class="text-xs text-hout/60 mt-8 italic">* Vervang de bovenstaande tekstplaceholders door de officiële logo's van de organisaties.</p>
         </div>
     </section>
@@ -416,15 +615,10 @@
             <img class="rounded-4" src="./roadmap.jpeg" alt="">
             </div>
             <div class="relative reveal">
-                <!-- Desktop Timeline Line -->
                 <div class="timeline-line hidden md:block"></div>
-                <!-- Mobile Timeline Line -->
                 <div class="absolute left-5 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-goud via-hout to-transparent transform -translate-x-1/2 md:-translate-x-1/2"></div>
 
                 <div class="space-y-12">
-                    <!-- PLACEHOLDER: Update years and descriptions below -->
-                    
-                    <!-- 2026 -->
                     <div class="flex flex-col md:flex-row items-center w-full">
                         <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 pl-12 md:pl-0">
                             <h3 class="text-hout font-serif text-3xl mb-2">2026</h3>
@@ -437,7 +631,6 @@
                         <div class="md:w-1/2 md:pl-12"></div>
                     </div>
 
-                    <!-- 2027 -->
                     <div class="flex flex-col md:flex-row items-center w-full">
                         <div class="md:w-1/2 md:pr-12"></div>
                         <div class="w-10 h-10 rounded-full border-4 border-zand bg-hout z-10 absolute left-0 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center shadow-md">
@@ -450,7 +643,6 @@
                         </div>
                     </div>
 
-                    <!-- 2028 -->
                     <div class="flex flex-col md:flex-row items-center w-full">
                         <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 pl-12 md:pl-0">
                             <h3 class="text-hout font-serif text-3xl mb-2">2028</h3>
@@ -463,7 +655,6 @@
                         <div class="md:w-1/2 md:pl-12"></div>
                     </div>
 
-                    <!-- 2029 -->
                     <div class="flex flex-col md:flex-row items-center w-full">
                         <div class="md:w-1/2 md:pr-12"></div>
                         <div class="w-10 h-10 rounded-full border-4 border-zand bg-hout z-10 absolute left-0 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center shadow-md">
@@ -476,7 +667,6 @@
                         </div>
                     </div>
 
-                    <!-- 2030 -->
                     <div class="flex flex-col md:flex-row items-center w-full">
                         <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0 pl-12 md:pl-0">
                             <h3 class="text-hout font-serif text-3xl mb-2">2030</h3>
@@ -493,14 +683,14 @@
         </div>
     </section>
 
-    <!-- Winti Color Accent Stripe (Bottom) - Exactly as shown in guide -->
+    <!-- Winti Color Accent Stripe (Bottom) -->
     <div class="h-1.5 w-full flex">
-        <div class="flex-1 bg-[#8B5E3C]"></div> <!-- Hout/Bruin -->
-        <div class="flex-1 bg-[#FFFFFF]"></div> <!-- Wit -->
-        <div class="flex-1 bg-[#2F6F9F]"></div> <!-- Blauw/Water -->
-        <div class="flex-1 bg-[#1B2A4A]"></div> <!-- Diepblauw -->
-        <div class="flex-1 bg-[#C23B22]"></div> <!-- Rood/Ingi -->
-        <div class="flex-1 bg-[#2E6B3F]"></div> <!-- Groen/Natuur -->
+        <div class="flex-1 bg-[#8B5E3C]"></div>
+        <div class="flex-1 bg-[#FFFFFF]"></div>
+        <div class="flex-1 bg-[#2F6F9F]"></div>
+        <div class="flex-1 bg-[#1B2A4A]"></div>
+        <div class="flex-1 bg-[#C23B22]"></div>
+        <div class="flex-1 bg-[#2E6B3F]"></div>
     </div>
 
     <!-- ================= FOOTER ================= -->
@@ -517,8 +707,86 @@
         </div>
     </footer>
 
+    </div><!-- /#site-content -->
+
     <!-- ================= JAVASCRIPT ================= -->
     <script>
+        /* ============================================================
+           PASSCODE PROTECTION
+           ------------------------------------------------------------
+           Change the passcode below to whatever you want.
+           Default: "naomie11"
+           ============================================================ */
+        const CORRECT_PASSCODE = "naomie11";
+
+        const lockScreen   = document.getElementById('passcode-lock');
+        const siteContent  = document.getElementById('site-content');
+        const passInput    = document.getElementById('passcode-input');
+        const unlockBtn    = document.getElementById('unlock-btn');
+        const lockError    = document.getElementById('lock-error');
+
+        function unlockSite() {
+            lockScreen.classList.add('unlocked');
+            siteContent.classList.add('visible');
+            document.body.classList.remove('locked');
+
+            // Optional: store unlock in sessionStorage so it persists on page refresh
+            // (remove the line below if you want the lock to appear on every refresh)
+            sessionStorage.setItem('kmo_unlocked', 'true');
+
+            // Fire any reveal animations after unlock
+            setTimeout(() => {
+                document.querySelectorAll('.reveal').forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top < window.innerHeight) {
+                        el.classList.add('active');
+                    }
+                });
+            }, 100);
+        }
+
+        function tryUnlock() {
+            const entered = passInput.value.trim();
+
+            if (entered === CORRECT_PASSCODE) {
+                lockError.textContent = "";
+                unlockSite();
+            } else {
+                lockError.textContent = "Onjuiste code. Probeer het opnieuw.";
+                passInput.classList.add('error');
+                passInput.value = "";
+                passInput.focus();
+
+                setTimeout(() => {
+                    passInput.classList.remove('error');
+                }, 500);
+            }
+        }
+
+        // Check if already unlocked in this session
+        if (sessionStorage.getItem('kmo_unlocked') === 'true') {
+            lockScreen.classList.add('unlocked');
+            siteContent.classList.add('visible');
+            document.body.classList.remove('locked');
+        }
+
+        // Event listeners
+        unlockBtn.addEventListener('click', tryUnlock);
+        passInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') tryUnlock();
+        });
+
+        // Auto-focus the input when the page loads
+        window.addEventListener('load', () => {
+            if (sessionStorage.getItem('kmo_unlocked') !== 'true') {
+                passInput.focus();
+            }
+        });
+
+        /* ============================================================
+           EXISTING SITE JAVASCRIPT (unchanged)
+           ============================================================ */
+
         // 1. Mobile Menu Toggle
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -527,7 +795,6 @@
             mobileMenu.classList.toggle('hidden');
         });
 
-        // Close mobile menu on link click
         document.querySelectorAll('#mobile-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
@@ -610,7 +877,6 @@
         };
 
         function openZone(zoneId) {
-            // Update active tab styling
             const tabs = document.querySelectorAll('.zone-tab');
             tabs.forEach((tab, index) => {
                 if (index + 1 === zoneId) {
@@ -620,13 +886,11 @@
                 }
             });
 
-            // Update content
             const zone = zones[zoneId];
             document.getElementById('zone-number').textContent = zoneId;
             document.getElementById('zone-title').textContent = zone.title;
             document.getElementById('zone-desc').textContent = zone.desc;
             
-            // Update image with a subtle fade effect
             const imgElement = document.getElementById('zone-image');
             imgElement.style.opacity = '0';
             setTimeout(() => {
